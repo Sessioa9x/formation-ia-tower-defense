@@ -26,6 +26,8 @@ func _process(delta):
 			move_amount = delta * speed 
 		elif(category == "rolling"):
 			move_amount = delta * speed / world.get_cost(tile_pos)
+		elif(category == "boss"):
+			move_amount = delta * speed / world.get_cost_boss(tile_pos)	
 			
 		if (distance < move_amount):
 			destination = tile_map.map_to_world(world.dijkstra[dijkstra].get_next(tile_pos))

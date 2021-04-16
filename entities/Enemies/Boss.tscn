@@ -1,0 +1,58 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://sprites/M484VerticalShmupSet2-30x30.png" type="Texture" id=1]
+[ext_resource path="res://scripts/Enemy.gd" type="Script" id=2]
+[ext_resource path="res://entities/Projectiles/Missile.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scripts/Shooter.gd" type="Script" id=4]
+[ext_resource path="res://entities/Projectiles/MegaMissille.tscn" type="PackedScene" id=5]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 9.65056, 3.37472 )
+
+[node name="Boss" type="Area2D"]
+collision_layer = 4
+collision_mask = 2
+script = ExtResource( 2 )
+speed = 20.0
+hitpoints = 65.0
+dijkstra = "boss_to_base"
+reward = 150
+category = "boss"
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+centered = false
+region_enabled = true
+region_rect = Rect2( 53.9604, 1026.78, 31.345, 21.4641 )
+
+[node name="Sprite2" type="Sprite" parent="."]
+position = Vector2( -14.4368, 12.6049 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 62.4218, 598.805, 31.879, 17.2383 )
+
+[node name="Sprite3" type="Sprite" parent="."]
+position = Vector2( -13.2975, 11.2373 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 240.503, 438.825, 21.0297, 12.9413 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0.66872, 10.9186 )
+scale = Vector2( -3.16878, 3.20124 )
+shape = SubResource( 1 )
+
+[node name="Shooter" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 10
+script = ExtResource( 4 )
+attack_speed = 0.75
+projectile = ExtResource( 3 )
+
+[node name="Shooter2" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 8
+script = ExtResource( 4 )
+attack_range = 1000.0
+attack_speed = 0.2
+projectile = ExtResource( 5 )

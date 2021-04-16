@@ -9,11 +9,12 @@
 extents = Vector2( 14.5, 14.5 )
 
 [node name="Plane" type="Area2D"]
+rotation = -1.57838
 collision_layer = 4
 collision_mask = 2
 script = ExtResource( 2 )
 speed = 35.0
-hitpoints = 40.0
+hitpoints = 30.0
 dijkstra = "fly_to_base"
 reward = 50
 category = "flying"

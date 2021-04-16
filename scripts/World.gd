@@ -33,6 +33,15 @@ func get_cost_fly(pos):
 	# sinon le coût par défaut c'est 1
 	return 1
 
+func get_cost_boss(pos):
+	var group = tile_map.get_group(pos)
+	# les cases eau et arbre ne peuvent pas être traversées
+	if group == 'water': return null
+	# si on a renseigné un coût pour ce type de terrain, on l'applique ici
+	if movement_costs.has(group): return movement_costs[group]
+	# sinon le coût par défaut c'est 1
+	return 1
+
 # _ready est une fonction Godot qui sera invoquée à la création de l'objet
 func _ready():
 	# initialiser la grille des entités
@@ -65,7 +74,14 @@ func _ready():
 		graphs['fly_cost'][x].resize(height)
 		for y in range(height):
 			graphs['fly_cost'][x][y] = get_cost_fly(Vector2(x, y))
-		
+	
+	graphs['boss_cost'] = []
+	for x in range(width):
+		graphs['boss_cost'].append([])
+		graphs['boss_cost'][x].resize(height)
+		for y in range(height):
+			graphs['boss_cost'][x][y] = get_cost_boss(Vector2(x, y))	
+			
 	# il faut ajouter la base aux entités gérées par ce script	
 	var base = get_node("Base")
 	add_entity(base, base.position)
@@ -126,6 +142,7 @@ func add_entity(entity, pos):
 			if !dijkstra.has('distance_to_%s' % tilemap_entity.tag): dijkstra['distance_to_%s' % tilemap_entity.tag] = DijkstraMap.new(entity_lookups[tilemap_entity.tag], graphs['cost'])
 			if !dijkstra.has('avoid_range_go_to_%s' % tilemap_entity.tag): dijkstra['avoid_range_go_to_%s' % tilemap_entity.tag] = DijkstraMap.new(entity_lookups[tilemap_entity.tag], graphs['range_cost'])
 			if !dijkstra.has('fly_to_%s' % tilemap_entity.tag): dijkstra['fly_to_%s' % tilemap_entity.tag] = DijkstraMap.new(entity_lookups[tilemap_entity.tag], graphs['fly_cost'])	
+			if !dijkstra.has('boss_to_%s' % tilemap_entity.tag): dijkstra['boss_to_%s' % tilemap_entity.tag] = DijkstraMap.new(entity_lookups[tilemap_entity.tag], graphs['boss_cost'])	
 	else: entity_positions.append(tile_pos)
 	
 	var shooter = entity.get_node_or_null("Shooter")

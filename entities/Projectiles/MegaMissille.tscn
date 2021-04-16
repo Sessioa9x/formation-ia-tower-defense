@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://sprites/M484VerticalShmupSet2-30x30.png" type="Texture" id=1]
+[ext_resource path="res://scripts/Projectile.gd" type="Script" id=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 8.02372, 4.30295 )
+
+[node name="Missile" type="Area2D"]
+script = ExtResource( 2 )
+damage = 5.0
+speed = 55.0
+duration = 150.0
+
+[node name="Sprite" type="Sprite" parent="."]
+scale = Vector2( 1.4271, 1.4271 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 315.337, 839.819, 11.855, 7.3252 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
