@@ -5,6 +5,7 @@ export (float) var speed = 1
 export (float) var hitpoints = 20
 export (String) var dijkstra
 export (int) var reward = 30
+export (String) var category = "rolling"
 var destination
 var world
 
@@ -20,7 +21,12 @@ func _process(delta):
 			distance = position.distance_to(destination)
 		var tile_map = world.tile_map
 		var tile_pos = tile_map.world_to_map(position)
-		var move_amount = delta * speed / world.get_cost(tile_pos)
+		var move_amount
+		if	(category == "flying"):
+			move_amount = delta * speed 
+		elif(category == "rolling"):
+			move_amount = delta * speed / world.get_cost(tile_pos)
+			
 		if (distance < move_amount):
 			destination = tile_map.map_to_world(world.dijkstra[dijkstra].get_next(tile_pos))
 		position = position.move_toward(destination, move_amount)
