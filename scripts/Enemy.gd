@@ -31,6 +31,11 @@ func _process(delta):
 			
 		if (distance < move_amount):
 			destination = tile_map.map_to_world(world.dijkstra[dijkstra].get_next(tile_pos))
+			if (tile_map.get_group(tile_pos) == "tree" && category == "boss"):
+				tile_map.set_cell(tile_pos.x, tile_pos.y, 0, false, false, false, Vector2(8,4))
+				world.update_cost(tile_pos)
+				world.calculMap()
+				
 		position = position.move_toward(destination, move_amount)
 		
 func take_damage(amount):

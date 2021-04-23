@@ -118,6 +118,16 @@ func reset_shooter_cost(pos, attack_range):
 				if graphs['fly_cost'][map_x][map_y] == null: continue
 				graphs['fly_cost'][map_x][map_y] = get_cost(Vector2(map_x, map_y))
 
+func calculMap():
+	print("start calcul")
+	for map in dijkstra:
+		dijkstra[map].calculate()
+
+func update_cost(pos):
+	entities[pos.x][pos.y] = null
+	for graph in graphs:
+		graphs[graph][pos.x][pos.y] = get_cost(pos)
+		
 # ajouter une entité aux systèmes "world"	
 func add_entity(entity, pos):
 	if get_node("/root/Main").state != "playing": return
@@ -166,8 +176,7 @@ func add_entity(entity, pos):
 			add_shooter_cost(pos, shooter.attack_range)
 			
 	# on doit recalculer tous le graphes car il y a de nouveaux obstacles à contourner
-	for map in dijkstra:
-		dijkstra[map].calculate()
+	calculMap()
 	
 	# ajouter l'entité dans la hierarchie et la positionner correctement
 	var parent = entity.get_node_or_null("..")
@@ -218,8 +227,7 @@ func remove_entity(entity):
 					add_shooter_cost(Vector2(tower_pos.x + x, tower_pos.y + y), tower_shooter.attack_range)
 		
 	# on doit recalculer tous les graphes Dijkstra car de nouveaux chemins pourraient être ouverts	
-	for map in dijkstra:
-		dijkstra[map].calculate()
+	calculMap()
 		
 	# enlever l'entité de la hierarchie
 	entity.queue_free()
