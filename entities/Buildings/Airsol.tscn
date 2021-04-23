@@ -26,7 +26,6 @@ region_rect = Rect2( 218.873, 95.9107, 27.1196, 24.4076 )
 
 [node name="Shooter" type="Area2D" parent="."]
 collision_layer = 0
-collision_mask = 4
 script = ExtResource( 4 )
 attack_range = 400.0
 attack_speed = 0.25

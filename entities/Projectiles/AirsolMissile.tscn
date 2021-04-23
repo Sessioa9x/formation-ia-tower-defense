@@ -9,7 +9,7 @@ extents = Vector2( 4.42316, 4.30295 )
 [node name="Missile" type="Area2D"]
 script = ExtResource( 2 )
 damage = 10.0
-speed = 70.0
+speed = 250.0
 duration = 10.0
 
 [node name="Sprite" type="Sprite" parent="."]
