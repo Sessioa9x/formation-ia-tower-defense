@@ -50,6 +50,12 @@ waves = [ {
 }, {
 "enemies": [ ExtResource( 4 ), ExtResource( 4 ), ExtResource( 3 ), ExtResource( 9 ), ExtResource( 2 ), ExtResource( 2 ), ExtResource( 2 ), ExtResource( 3 ), ExtResource( 3 ), ExtResource( 2 ) ],
 "wait": 30.0
+}, {
+"enemies": [ ExtResource( 4 ), ExtResource( 4 ), ExtResource( 4 ), ExtResource( 4 ) ],
+"wait": 30.0
+}, {
+"enemies": [ ExtResource( 9 ), ExtResource( 2 ), ExtResource( 4 ), ExtResource( 3 ), ExtResource( 2 ), ExtResource( 2 ), ExtResource( 4 ), ExtResource( 4 ), ExtResource( 3 ), ExtResource( 2 ) ],
+"wait": 30.0
 } ]
 interval = 4.0
 
