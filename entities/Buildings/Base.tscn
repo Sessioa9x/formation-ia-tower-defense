@@ -10,6 +10,7 @@ script = ExtResource( 2 )
 width = 8
 height = 8
 hitpoints = 150.0
+tag = [ "base" ]
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource( 1 )

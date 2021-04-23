@@ -100,7 +100,10 @@ func add_shooter_cost(pos, attack_range):
 				if map_x < 0 || map_x >= width || map_y < 0 || map_y >= height: continue
 				if graphs['range_cost'][map_x][map_y] == null: continue
 				graphs['range_cost'][map_x][map_y] = max(graphs['range_cost'][map_x][map_y], get_cost(Vector2(map_x, map_y)) + tower_cost)
-				
+				if graphs['fly_cost'][map_x][map_y] == null: continue
+				if (entities[pos.x][pos.y].tag.find("airsol",0) == -1):
+					graphs['fly_cost'][map_x][map_y] = max(graphs['fly_cost'][map_x][map_y], get_cost(Vector2(map_x, map_y)) + tower_cost)
+
 func reset_shooter_cost(pos, attack_range):
 	var tile_range = ceil(attack_range / tile_map.cell_size.x)
 	for x in range(tile_range):
@@ -112,7 +115,9 @@ func reset_shooter_cost(pos, attack_range):
 				if map_x < 0 || map_x >= width || map_y < 0 || map_y >= height: continue
 				if graphs['range_cost'][map_x][map_y] == null: continue
 				graphs['range_cost'][map_x][map_y] = get_cost(Vector2(map_x, map_y))
-	
+				if graphs['fly_cost'][map_x][map_y] == null: continue
+				graphs['fly_cost'][map_x][map_y] = get_cost(Vector2(map_x, map_y))
+
 # ajouter une entité aux systèmes "world"	
 func add_entity(entity, pos):
 	if get_node("/root/Main").state != "playing": return
@@ -138,11 +143,12 @@ func add_entity(entity, pos):
 		# pour chaque "tag" on a une liste d'entités et un graphe Dijkstra
 		# on les créé ici s'ils n'existent pas déjà
 		if tilemap_entity.tag:
-			if !entity_lookups.has(tilemap_entity.tag): entity_lookups[tilemap_entity.tag] = []
-			if !dijkstra.has('distance_to_%s' % tilemap_entity.tag): dijkstra['distance_to_%s' % tilemap_entity.tag] = DijkstraMap.new(entity_lookups[tilemap_entity.tag], graphs['cost'])
-			if !dijkstra.has('avoid_range_go_to_%s' % tilemap_entity.tag): dijkstra['avoid_range_go_to_%s' % tilemap_entity.tag] = DijkstraMap.new(entity_lookups[tilemap_entity.tag], graphs['range_cost'])
-			if !dijkstra.has('fly_to_%s' % tilemap_entity.tag): dijkstra['fly_to_%s' % tilemap_entity.tag] = DijkstraMap.new(entity_lookups[tilemap_entity.tag], graphs['fly_cost'])	
-			if !dijkstra.has('boss_to_%s' % tilemap_entity.tag): dijkstra['boss_to_%s' % tilemap_entity.tag] = DijkstraMap.new(entity_lookups[tilemap_entity.tag], graphs['boss_cost'])	
+			for b in range(tilemap_entity.tag.size()):
+				if !entity_lookups.has(tilemap_entity.tag[b]): entity_lookups[tilemap_entity.tag[b]] = []
+				if !dijkstra.has('distance_to_%s' % tilemap_entity.tag[b]): dijkstra['distance_to_%s' % tilemap_entity.tag[b]] = DijkstraMap.new(entity_lookups[tilemap_entity.tag[b]], graphs['cost'])
+				if !dijkstra.has('avoid_range_go_to_%s' % tilemap_entity.tag[b]): dijkstra['avoid_range_go_to_%s' % tilemap_entity.tag[b]] = DijkstraMap.new(entity_lookups[tilemap_entity.tag[b]], graphs['range_cost'])
+				if !dijkstra.has('fly_to_%s' % tilemap_entity.tag[b]): dijkstra['fly_to_%s' % tilemap_entity.tag[b]] = DijkstraMap.new(entity_lookups[tilemap_entity.tag[b]], graphs['fly_cost'])	
+				if !dijkstra.has('boss_to_%s' % tilemap_entity.tag[b]): dijkstra['boss_to_%s' % tilemap_entity.tag[b]] = DijkstraMap.new(entity_lookups[tilemap_entity.tag[b]], graphs['boss_cost'])	
 	else: entity_positions.append(tile_pos)
 	
 	var shooter = entity.get_node_or_null("Shooter")
@@ -155,7 +161,7 @@ func add_entity(entity, pos):
 			graphs[graph][pos.x][pos.y] = null
 		# on l'ajoute aussi à la liste de son tag
 		if tilemap_entity && tilemap_entity.tag:
-			entity_lookups[tilemap_entity.tag].append(pos)
+			entity_lookups[tilemap_entity.tag[0]].append(pos)
 		if shooter:
 			add_shooter_cost(pos, shooter.attack_range)
 			
@@ -196,8 +202,8 @@ func remove_entity(entity):
 		for graph in graphs:
 			graphs[graph][pos.x][pos.y] = get_cost(pos)
 		# enlever de la liste par tag
-		if tilemap_entity && tilemap_entity.tag && entity_lookups[tilemap_entity.tag]:
-			entity_lookups[tilemap_entity.tag].erase(pos)
+		if tilemap_entity && tilemap_entity.tag[0] && entity_lookups[tilemap_entity.tag[0]]:
+			entity_lookups[tilemap_entity.tag[0]].erase(pos)
 		if shooter:
 			reset_shooter_cost(pos, shooter.attack_range)
 			

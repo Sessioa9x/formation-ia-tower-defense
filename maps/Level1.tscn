@@ -36,7 +36,6 @@ tile_groups = {
 
 [node name="Base" parent="." instance=ExtResource( 1 )]
 position = Vector2( 928, 64 )
-tag = "base"
 
 [node name="Spawner" type="Node2D" parent="."]
 position = Vector2( 116, 696 )

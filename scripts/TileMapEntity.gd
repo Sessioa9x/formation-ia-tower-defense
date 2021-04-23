@@ -5,7 +5,7 @@ class_name TileMapEntity
 export (int) var width = 1
 export (int) var height = 1
 export (float) var hitpoints = 50
-export (String) var tag
+export (Array) var tag = []
 
 func _ready():
 	var collision_shape = CollisionShape2D.new()

@@ -9,7 +9,7 @@
 collision_layer = 2
 collision_mask = 0
 script = ExtResource( 2 )
-tag = "tower"
+tag = [ "tower" ]
 
 [node name="Sprite3" type="Sprite" parent="."]
 texture = ExtResource( 1 )
