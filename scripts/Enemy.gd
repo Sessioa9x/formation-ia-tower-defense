@@ -40,6 +40,7 @@ func _process(delta):
 		
 func take_damage(amount):
 	hitpoints -= amount
+	$HealthDisplay.update_healthbar(hitpoints)
 	if (hitpoints <= 0):
 		queue_free()
 		var main = get_node("/root/Main")

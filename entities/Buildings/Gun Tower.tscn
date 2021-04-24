@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://sprites/M484VerticalShmupSet1-29x29.png" type="Texture" id=1]
 [ext_resource path="res://scripts/Tower.gd" type="Script" id=2]
 [ext_resource path="res://entities/Projectiles/Bullet.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scripts/Shooter.gd" type="Script" id=4]
+[ext_resource path="res://scripts/lifeBar.gd" type="Script" id=5]
+[ext_resource path="res://sprites/barHorizontal_green.png" type="Texture" id=6]
 
 [node name="Tower" type="Area2D"]
 collision_layer = 2
@@ -38,3 +40,19 @@ script = ExtResource( 4 )
 attack_range = 150.0
 attack_speed = 3.0
 projectile = ExtResource( 3 )
+
+[node name="HealthDisplay" type="Node2D" parent="."]
+script = ExtResource( 5 )
+
+[node name="HealthBar" type="TextureProgress" parent="HealthDisplay"]
+margin_left = 3.74577
+margin_top = -21.5382
+margin_right = 203.746
+margin_bottom = 18.4618
+rect_scale = Vector2( 0.102041, 0.0950247 )
+max_value = 40.0
+value = 40.0
+texture_progress = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}

@@ -52,5 +52,6 @@ func _on_game_state(state):
 	if state != "playing":
 		wave_timer.stop()
 		spawn_timer.stop()
+		
 	
 

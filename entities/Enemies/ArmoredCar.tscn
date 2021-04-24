@@ -1,9 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://scripts/Enemy.gd" type="Script" id=1]
 [ext_resource path="res://sprites/M484VerticalShmupSet1-29x29.png" type="Texture" id=2]
 [ext_resource path="res://entities/Projectiles/Bullet.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scripts/Shooter.gd" type="Script" id=4]
+[ext_resource path="res://scripts/lifeBar.gd" type="Script" id=5]
+[ext_resource path="res://sprites/barHorizontal_green.png" type="Texture" id=6]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 14.9635, 7.38137 )
@@ -32,3 +34,19 @@ script = ExtResource( 4 )
 attack_range = 150.0
 attack_speed = 3.0
 projectile = ExtResource( 3 )
+
+[node name="HealthDisplay" type="Node2D" parent="."]
+script = ExtResource( 5 )
+
+[node name="HealthBar" type="TextureProgress" parent="HealthDisplay"]
+margin_left = 2.83482
+margin_top = -5.03968
+margin_right = 202.835
+margin_bottom = 34.9603
+rect_scale = Vector2( 0.1, 0.152778 )
+max_value = 20.0
+value = 20.0
+texture_progress = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}

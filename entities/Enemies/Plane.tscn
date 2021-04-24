@@ -1,9 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://sprites/M484VerticalShmupSet2-30x30.png" type="Texture" id=1]
 [ext_resource path="res://scripts/Enemy.gd" type="Script" id=2]
 [ext_resource path="res://entities/Projectiles/Missile.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scripts/Shooter.gd" type="Script" id=4]
+[ext_resource path="res://scripts/lifeBar.gd" type="Script" id=5]
+[ext_resource path="res://sprites/barHorizontal_green.png" type="Texture" id=6]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 14.5, 14.5 )
@@ -35,3 +37,21 @@ collision_mask = 8
 script = ExtResource( 4 )
 attack_speed = 0.75
 projectile = ExtResource( 3 )
+
+[node name="HealthDisplay" type="Node2D" parent="."]
+position = Vector2( 1.05039, 1.19989 )
+script = ExtResource( 5 )
+
+[node name="HealthBar" type="TextureProgress" parent="HealthDisplay"]
+margin_left = 33.5624
+margin_top = 23.5089
+margin_right = 233.562
+margin_bottom = 63.5089
+rect_rotation = -268.822
+rect_scale = Vector2( -0.107568, 0.154769 )
+max_value = 30.0
+value = 30.0
+texture_progress = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
